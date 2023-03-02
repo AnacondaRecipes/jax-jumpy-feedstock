@@ -10,32 +10,41 @@ source:
   sha256: 8ffe4e7609461d13decc97269ff48a3ee8d7570c96cbcc82487f893a3dd65093
 
 build:
-  noarch: python
-  script: {{ PYTHON }} -m pip install . -vv
   number: 0
+  skip: True  # [py<37]
+  script: {{ PYTHON }} -m pip install . -vv --no-deps
 
 requirements:
   host:
-    - hatchling >=1.4.0
+    - hatchling 1.8.0
     - pip
-    - python >=3.7
+    - python
+    - numpy
   run:
     - numpy >=1.18.0
-    - python >=3.7
+    - python
+  run_constrained:
+    - jax >=0.3.24
+    - jaxlib >=0.3.24
 
 test:
   imports:
     - jumpy
-  commands:
-    - pip check
   requires:
     - pip
+  commands:
+    - pip check
 
 about:
   home: https://github.com/Farama-Foundation/Jumpy
   summary: Common backend for JAX or numpy.
   license: Apache-2.0
+  license_family: Apache
   license_file: LICENSE
+  description: |
+    Jumpy is a common backend for JAX or numpy.
+  doc_url: https://github.com/Farama-Foundation/Jumpy
+  dev_url: https://github.com/Farama-Foundation/Jumpy
 
 extra:
   recipe-maintainers:
